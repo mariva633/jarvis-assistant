@@ -1,0 +1,390 @@
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  background: #03070c;
+  color: #dff9ff;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+  position: fixed;
+  overscroll-behavior: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.app {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 16px 12px 80px;
+  height: 100vh;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  text-align: center;
+  flex-shrink: 0;
+}
+
+.status {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: #67e8f9;
+  text-transform: uppercase;
+}
+
+.status span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #67e8f9;
+  box-shadow: 0 0 12px #67e8f9;
+  margin-right: 6px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+h1 {
+  font-size: 36px;
+  letter-spacing: 8px;
+  margin: 12px 0 2px;
+  text-shadow: 0 0 20px #22d3ee;
+  line-height: 1;
+}
+
+header p {
+  font-size: 10px;
+  letter-spacing: 4px;
+  color: #78909c;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.reactor-area {
+  height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  flex-shrink: 0;
+  margin: 16px 0;
+}
+
+.ring {
+  position: absolute;
+  border: 1px solid #22d3ee;
+  border-radius: 50%;
+  opacity: 0.45;
+}
+
+.ring1 {
+  width: 140px;
+  height: 140px;
+  animation: spin 7s linear infinite;
+}
+
+.ring2 {
+  width: 190px;
+  height: 190px;
+  border-style: dashed;
+  animation: spin 12s linear reverse infinite;
+}
+
+.ring3 {
+  width: 240px;
+  height: 240px;
+  opacity: 0.18;
+  animation: spin 20s linear infinite;
+}
+
+.mic-active .ring1 {
+  box-shadow: 0 0 35px #22d3ee;
+  opacity: 1;
+}
+
+.mic-active .ring2 {
+  opacity: 0.8;
+}
+
+.mic-active .ring3 {
+  opacity: 0.45;
+}
+
+.reactor-area button {
+  z-index: 2;
+  border: 1px solid #67e8f9;
+  background: #06151d;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  box-shadow: 0 0 30px #083344, inset 0 0 30px #082f49;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.1s ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.reactor-area button:active {
+  transform: scale(0.94);
+  box-shadow: 0 0 50px #22d3ee, inset 0 0 50px #0a4456;
+}
+
+.core {
+  font-size: 48px;
+  font-weight: bold;
+  color: #bff7ff;
+  text-shadow: 0 0 20px #22d3ee;
+  line-height: 1;
+}
+
+#state {
+  z-index: 3;
+  margin-top: 120px;
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: #7dd3fc;
+  text-transform: uppercase;
+  text-align: center;
+  min-height: 16px;
+}
+
+.panel {
+  border: 1px solid #123542;
+  background: #061017;
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 10px;
+  box-shadow: 0 0 20px #02070a;
+  flex-shrink: 0;
+}
+
+.label {
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: #4dd5e8;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+#response {
+  color: #9ecdd8;
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 40px;
+  word-wrap: break-word;
+}
+
+.history {
+  color: #8ba7af;
+  font-size: 12px;
+  line-height: 1.5;
+  max-height: 100px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.history div {
+  padding: 6px 0;
+  border-bottom: 1px solid #0a1a20;
+  word-wrap: break-word;
+}
+
+.history div:last-child {
+  border-bottom: none;
+}
+
+.input-row {
+  display: flex;
+  gap: 8px;
+  flex-shrink: 0;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 10px 12px;
+  background: linear-gradient(to top, #03070c, rgba(3, 7, 12, 0.9));
+  z-index: 100;
+  max-width: 600px;
+  margin: 0 auto;
+  width: calc(100% - 24px);
+}
+
+.input-row input {
+  flex: 1;
+  min-width: 0;
+  background: #061017;
+  border: 1px solid #163946;
+  border-radius: 8px;
+  padding: 10px 12px;
+  color: #dff9ff;
+  outline: none;
+  font-size: 14px;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.input-row input::placeholder {
+  color: #4a6a73;
+}
+
+.input-row button {
+  border: 1px solid #22d3ee;
+  background: #07303b;
+  color: #c9faff;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 12px;
+  -webkit-appearance: none;
+  appearance: none;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.input-row button:active {
+  background: #0a4456;
+  box-shadow: 0 0 20px #22d3ee;
+  transform: scale(0.95);
+}
+
+.info-bar {
+  position: fixed;
+  bottom: 60px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-around;
+  padding: 8px;
+  font-size: 11px;
+  color: #67e8f9;
+  background: rgba(6, 21, 29, 0.8);
+  border-top: 1px solid #123542;
+  z-index: 99;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Suporte para notch e safe areas */
+@supports (padding: max(0px)) {
+  header {
+    padding-top: max(12px, env(safe-area-inset-top));
+  }
+  
+  .input-row {
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+  }
+}
+
+/* Orientação landscape */
+@media (orientation: landscape) {
+  .app {
+    padding: 12px 12px 70px;
+  }
+  
+  .reactor-area {
+    height: 180px;
+    margin: 8px 0;
+  }
+  
+  h1 {
+    font-size: 28px;
+    margin: 6px 0;
+  }
+  
+  .panel {
+    margin-bottom: 6px;
+    padding: 8px;
+  }
+  
+  .history {
+    max-height: 60px;
+  }
+}
+
+/* Tablets e telas maiores */
+@media (min-width: 768px) {
+  .app {
+    padding: 32px 24px 100px;
+  }
+  
+  .reactor-area {
+    height: 360px;
+    margin: 24px 0;
+  }
+  
+  h1 {
+    font-size: 48px;
+    letter-spacing: 12px;
+  }
+  
+  .reactor-area button {
+    width: 140px;
+    height: 140px;
+  }
+  
+  .core {
+    font-size: 64px;
+  }
+  
+  #state {
+    margin-top: 180px;
+  }
+  
+  .panel {
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  
+  .input-row {
+    max-width: 600px;
+    bottom: 0;
+  }
+}
+
+/* Dark mode (already default, but ensure consistency) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #03070c;
+    color: #dff9ff;
+  }
+}
+
+/* Reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .ring, .reactor-area button, .input-row button, .status span {
+    animation: none !important;
+    transition: none !important;
+  }
+}
